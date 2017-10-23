@@ -2,4 +2,4 @@
 Web server for epa-ng tool
 
 ### Start server
-``` node server.js```
+``` $ node server.js```
