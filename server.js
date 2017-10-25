@@ -4,18 +4,26 @@
 // =============================================================================
 
 // call the packages we need
-const express    = require('express');        // call express
-const fileUpload = require('express-fileupload');
-const app        = express();                 // define our app using express
-const bodyParser = require('body-parser');
+const express = require('express');        // call express
+const fileUpload = require('express-fileupload'); // call fileUpload
+const bodyParser = require('body-parser'); // call body=parser
+const mkdirp = require('mkdirp'); // call mkdirp
 
-// use fileUpload()
-app.use(fileUpload());
+const app = express(); // define our app using express
+
+app.use(fileUpload()); // use fileUpload()
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// create path to save uploaded fasta QS files
+mkdirp('uploads/', function(err) { 
+    // path exists unless there was an error
+	if(err)
+		console.log('Error creating path uploads/');
+});
 
 var port = process.env.PORT || 3000;        // set our port
 
@@ -42,6 +50,7 @@ router.get('/trees', function(req, res) {
 });
 
 // POST uploading a file
+// use form-data with key='qs' and value=[FILE TO UPLOAD]
 router.post('/upload-qs', function(req, res) {
 	if (!req.files)
     	return res.status(400).send('No files were uploaded.');  
