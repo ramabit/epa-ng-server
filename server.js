@@ -4,9 +4,13 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
-var bodyParser = require('body-parser');
+const express    = require('express');        // call express
+const fileUpload = require('express-fileupload');
+const app        = express();                 // define our app using express
+const bodyParser = require('body-parser');
+
+// use fileUpload()
+app.use(fileUpload());
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -31,23 +35,32 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
-// more routes for our API will happen here
-
 // Get available trees in server (accessed at GET http://localhost:8080/api/trees)
 // TODO get real list of stored trees in server
 router.get('/trees', function(req, res) {
     res.json({ trees: ['insects', 'bacteries', 'mamals'] });   
 });
 
-// assuming POST: tree=insects&query=file.fasta  <-- URL encoding
-// or       POST: {"tree":"insects","query":"file.fasta"}  <-- JSON encoding
+// POST uploading a file
+router.post('/upload-qs', function(req, res) {
+	if (!req.files)
+    	return res.status(400).send('No files were uploaded.');  
+  
+	var querySequencesFile = req.files.qs;
+	console.log(querySequencesFile.name + " uploaded.");
 
-// /GET http://localhost:8080/api/phylogenetic?tree=insects&sequences=file.fasta  <-- URL
+	querySequencesFile.mv("uploads/" + querySequencesFile.name, function(err) {
+    	if (err)
+      		return res.status(500).send(err);
+ 
+    	res.send('File uploaded!');
+	});
+});
 
-// TODO implement file upload
+// GET http://localhost:8080/api/phylogenetic?tree=insects&qs=file.fasta  <-- URL
 router.get('/phylogenetic', function(req, res) {
-    var tree = req.query.tree;
-    var querySequencesFile = req.query.sequences;
+    var tree = req.query.tree; // name of the tree to be used
+    var querySequencesFileName = req.query.qs; // name of the QS file previously uploaded
 
 	// TODO execute scripts and get JSON result
 	// var jsonResult = ...
