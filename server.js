@@ -46,7 +46,22 @@ router.get('/', function(req, res) {
 // Get available trees in server (accessed at GET http://localhost:8080/api/trees)
 // TODO get real list of stored trees in server
 router.get('/trees', function(req, res) {
-    res.json({ trees: ['insects', 'bacteries', 'mamals'] });   
+	var util = require('util'),
+    exec = require('child_process').exec,
+    child;
+
+	child = exec('/bin/bash scripts/get-trees-list.sh', // command line argument directly in string
+  		function (error, stdout, stderr) {      // one easy function to capture data/errors
+    		console.log('stdout: ' + stdout);
+    		console.log('stderr: ' + stderr);
+    		if (error !== null) {
+      			console.log('exec error: ' + error);
+    		} else {
+				res.json({ trees: stdout });			
+			}
+		});
+	
+    //res.json({ trees: ['insects', 'bacteries', 'mamals'] });   
 });
 
 // POST uploading a file
