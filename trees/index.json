@@ -1,8 +1,8 @@
 { 
 	"trees":[
 		{ 
-			"family": "Mamals",
-			"folder-name": "mamals"
+			"family": "Animals",
+			"folder-name": "animals"
 		}
 	]
 }
