@@ -38,30 +38,26 @@ router.use(function(req, res, next) {
     next(); // make sure we go to the next routes and don't stop here
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+// test route to make sure everything is working (accessed at GET http://localhost:3000/api)
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
-// Get available trees in server (accessed at GET http://localhost:8080/api/trees)
-// TODO get real list of stored trees in server
+// Get available trees in server (accessed at GET http://localhost:3000/api/trees)
 router.get('/trees', function(req, res) {
 	var util = require('util'),
     exec = require('child_process').exec,
     child;
 
-	child = exec('/bin/bash scripts/get-trees-list.sh', // command line argument directly in string
-  		function (error, stdout, stderr) {      // one easy function to capture data/errors
+	child = exec('/bin/bash scripts/get-trees-list.sh',
+  		function (error, stdout, stderr) {     
     		console.log('stdout: ' + stdout);
-    		console.log('stderr: ' + stderr);
     		if (error !== null) {
       			console.log('exec error: ' + error);
     		} else {
 				res.json({ trees: stdout });			
 			}
-		});
-	
-    //res.json({ trees: ['insects', 'bacteries', 'mamals'] });   
+		});  
 });
 
 // POST uploading a file
@@ -81,7 +77,7 @@ router.post('/upload-qs', function(req, res) {
 	});
 });
 
-// GET http://localhost:8080/api/phylogenetic?tree=insects&qs=file.fasta  <-- URL
+// GET http://localhost:3000/api/phylogenetic?tree=insects&qs=file.fasta  <-- URL
 router.get('/phylogenetic', function(req, res) {
     var tree = req.query.tree; // name of the tree to be used
     var querySequencesFileName = req.query.qs; // name of the QS file previously uploaded
