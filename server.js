@@ -8,6 +8,7 @@ const express = require('express');        // call express
 const fileUpload = require('express-fileupload'); // call fileUpload
 const bodyParser = require('body-parser'); // call body=parser
 const mkdirp = require('mkdirp'); // call mkdirp
+const uuid = require('uuid'); // call uuid
 
 const app = express(); // define our app using express
 
@@ -69,24 +70,41 @@ router.post('/upload-qs', function(req, res) {
 	var querySequencesFile = req.files.qs;
 	console.log(querySequencesFile.name + " uploaded.");
 
-	querySequencesFile.mv("uploads/" + querySequencesFile.name, function(err) {
+	var randomCode = uuid.v4();
+	var fileNameArr = querySequencesFile.name.split(".");	
+	var fileName = fileNameArr[0];
+	var fileExtension = fileNameArr[1];
+	var fileStoredName = fileName + "+" + randomCode + "." + fileExtension;
+
+	querySequencesFile.mv("uploads/" + fileStoredName, function(err) {
     	if (err)
       		return res.status(500).send(err);
  
+		res.json({ token: randomCode });
     	res.send('File uploaded!');
 	});
 });
 
-// GET http://localhost:3000/api/phylogenetic?tree=insects&qs=file.fasta  <-- URL
+// GET http://localhost:3000/api/phylogenetic?tree=insects&qs=[UUID]  <-- URL
 router.get('/phylogenetic', function(req, res) {
     var tree = req.query.tree; // name of the tree to be used
-    var querySequencesFileName = req.query.qs; // name of the QS file previously uploaded
+    var storedQSUUID = req.query.qs; // uuid of the QS file previously uploaded
 
-	// TODO execute scripts and get JSON result
-	// var jsonResult = ...
-	// res.json(jsonResult);
-    res.json({ tree: 'Here we should retrieve the result tree.' });
-	//res.send('Response send to client with JSON file');
+	var util = require('util'),
+    exec = require('child_process').exec,
+    child;
+
+	child = exec('/bin/bash scripts/run-epa.sh ' + storedQSUUID + " " + tree,
+  		function (error, stdout, stderr) {     
+    		console.log('stdout: ' + stdout);
+    		if (error !== null) {
+      			console.log('exec error: ' + error);
+    		} else {
+				// TODO retrieve result
+				res.json({ tree: 'Here we should retrieve the result tree.' });		
+			}
+		});
+
 });
 
 // REGISTER OUR ROUTES -------------------------------
