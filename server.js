@@ -101,7 +101,8 @@ router.get('/phylogenetic', function(req, res) {
       			console.log('exec error: ' + error);
     		} else {
 				// TODO retrieve result
-				res.json({ tree: 'Here we should retrieve the result tree.' });		
+				res.send(stdout);
+				//res.json({ tree: 'Here we should retrieve the result tree.' });		
 			}
 		});
 
