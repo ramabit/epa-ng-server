@@ -1,10 +1,11 @@
 #!/bin/bash
-UUID = $1
-TREE_NAME = $2
 
-FILE_SEARCH_STRING = "*" + $UUID + "*"
+uuid=$1
+treeName=$2
 
-for QS_FILE in $(find ../uploads -name $FILE_SEARCH_STRING); do
+fileSearchString="*"$uuid"*"
+
+for QS_FILE in $(find uploads/ -name $fileSearchString); do
 	echo $QS_FILE
 done
 
