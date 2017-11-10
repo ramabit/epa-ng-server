@@ -24,5 +24,5 @@ rm -rf results/$uuid/epa_info.log
 rm -rf results/$uuid/stat
 rm -rf results/$uuid/pepa.status
 
-echo results/$uuid/epa_result.jplace
+#cat results/$uuid/epa_result.jplace | jq '.'
 

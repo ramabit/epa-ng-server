@@ -85,7 +85,7 @@ router.post('/upload-qs', function(req, res) {
 	});
 });
 
-// GET http://localhost:3000/api/phylogenetic?tree=insects&qs=[UUID]  <-- URL
+// GET http://localhost:3000/api/phylogenetic?tree=Animals&qs=[UUID]  <-- URL
 router.get('/phylogenetic', function(req, res) {
     var tree = req.query.tree; // name of the tree to be used
     var storedQSUUID = req.query.qs; // uuid of the QS file previously uploaded
@@ -96,13 +96,12 @@ router.get('/phylogenetic', function(req, res) {
 
 	child = exec('/bin/bash scripts/run-epa.sh ' + storedQSUUID + " " + tree,
   		function (error, stdout, stderr) {     
-    		console.log('stdout: ' + stdout);
+    		// console.log('stdout: ' + stdout);
     		if (error !== null) {
-      			console.log('exec error: ' + error);
+      			console.log('Exec error: ' + error);
     		} else {
-				// TODO retrieve result
-				res.send(stdout);
-				//res.json({ tree: 'Here we should retrieve the result tree.' });		
+				// retrieve result
+				res.sendfile('results/' + storedQSUUID + '/epa_result.jplace')		
 			}
 		});
 
