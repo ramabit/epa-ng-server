@@ -1,8 +1,10 @@
 { 
 	"trees":[
-		{ 
-			"family": "Animals",
-			"folder-name": "animals"
+		{ 						
+			"family_name": "Animals",
+			"folder_name": "animals",
+			"alignment_file": "trees/animals/aln.fasta",
+			"tree_file": "trees/animals/ref.tre"
 		}
 	]
 }
