@@ -18,7 +18,7 @@ done
 
 mkdir results/$uuid/
 
-./epa-ng -s $alignmentFile -t $treeFile -q $qsFile -w results/$uuid/
+epa-ng -s $alignmentFile -t $treeFile -q $qsFile -w results/$uuid/
 
 rm -rf results/$uuid/epa_info.log
 rm -rf results/$uuid/stat
