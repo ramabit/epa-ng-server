@@ -19,6 +19,13 @@ for QS_FILE in $(find uploads/ -name $fileSearchString); do
 	qsFile=$QS_FILE
 done
 
+
+## TODO call papara and genesis preprocess script
+## /scripts/./run-papara-and-genesis.sh $uuid $alignmentFile $treeFile $qsFile
+
+## TODO get new alignment, tree and QS files
+
+
 ## create directory for results
 mkdir results/$uuid/
 
