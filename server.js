@@ -41,7 +41,7 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:3000/api)
 router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
+    res.json({ message: 'Welcome to the EPA-ng API' });   
 });
 
 // Get available trees in server (accessed at GET http://localhost:3000/api/trees)
@@ -96,7 +96,6 @@ router.get('/phylogenetic', function(req, res) {
 
 	child = exec('/bin/bash scripts/run-epa.sh ' + storedQSUUID + " " + tree,
   		function (error, stdout, stderr) {     
-    		// console.log('stdout: ' + stdout);
     		if (error !== null) {
       			console.log('Exec error: ' + error);
     		} else {
@@ -114,4 +113,4 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-console.log('Magic happens on port ' + port)
+console.log('EPA-ng Web Server working on port ' + port)
