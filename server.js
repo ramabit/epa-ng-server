@@ -96,7 +96,6 @@ router.get('/phylogenetic', function(req, res) {
 
 	child = exec('/bin/bash scripts/run-epa.sh ' + storedQSUUID + " " + tree,
   		function (error, stdout, stderr) {     
-    		// console.log('stdout: ' + stdout);
     		if (error !== null) {
       			console.log('Exec error: ' + error);
     		} else {
@@ -114,4 +113,4 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-console.log('Magic happens on port ' + port)
+console.log('EPA-ng Web Server working on port ' + port)
