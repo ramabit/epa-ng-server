@@ -25,14 +25,14 @@ done
 ## create directory for results if doesn't exist
 mkdir results/$uuid/
 
-## TODO call papara and genesis preprocess script
-## /scripts/./run-papara-and-genesis.sh $uuid $phylipAlignmentFile $treeFile $qsFile
+## call papara and genesis preprocess script
+/bin/bash scripts/./run-papara-and-genesis.sh $uuid $phylipAlignmentFile $treeFile $qsFile
 
-## TODO get new alignment, tree and QS files
-
+## get new aligned QS file
+alignedQSFile=results/$uuid/aligned_query.fasta
 
 ## run EPA-ng algorithm
-epa-ng -s $fastaAlignmentFile -t $treeFile -q $qsFile -w results/$uuid/
+epa-ng -s $fastaAlignmentFile -t $treeFile -q $alignedQSFile -w results/$uuid/
 
 ## remove unnecessary temporary generated files
 rm -rf results/$uuid/epa_info.log
