@@ -56,7 +56,7 @@ router.get('/trees', function(req, res) {
     		if (error !== null) {
       			console.log('exec error: ' + error);
     		} else {
-				res.json({ trees: stdout });			
+				res.json({ trees: stdout.split(",") });			
 			}
 		});  
 });
