@@ -23,6 +23,7 @@ for QS_FILE in $(find uploads/ -name $fileSearchString); do
 done
 
 ## create directory for results if doesn't exist
+mkdir results/
 mkdir results/$uuid/
 
 ## call papara and genesis preprocess script
