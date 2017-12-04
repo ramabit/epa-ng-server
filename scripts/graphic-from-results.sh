@@ -9,4 +9,4 @@ uuid=$1
 export PATH=~/anaconda_ete/bin:$PATH
 
 ## generate image
-echo results/$uuid/epa_result.nw | ete3 view --image results/$uuid/tree.png
+ete3 view -t results/$uuid/epa_result.nw --image results/$uuid/tree.png --face 'value:@name, color:auto()' --face 'value:@dist, pos:b-top, color:steelblue, size:8'
