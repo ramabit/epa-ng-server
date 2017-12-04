@@ -85,10 +85,12 @@ router.post('/upload-qs', function(req, res) {
 	});
 });
 
-// GET http://localhost:3000/api/phylogenetic?tree=Animals&qs=[UUID]  <-- URL
+// GET /api/phylogenetic?tree=[treeName]&qs=[UUID]&graphic=[Boolean]  <-- URL
+// for example: http://localhost:3000/api/phylogenetic?tree=Animals&qs=a725f87f-c3c1-4c31-858e-be2a83924acb&graphic=true
 router.get('/phylogenetic', function(req, res) {
     var tree = req.query.tree; // name of the tree to be used
     var storedQSUUID = req.query.qs; // uuid of the QS file previously uploaded
+	var graphic = req.query.graphic; // graphical result if true, text result otherwise
 
 	var util = require('util'),
     exec = require('child_process').exec,
@@ -100,7 +102,12 @@ router.get('/phylogenetic', function(req, res) {
       			console.log('Exec error: ' + error);
     		} else {
 				// retrieve result
-				res.sendfile('results/' + storedQSUUID + '/epa_result.jplace')		
+				if (graphic) { // send graphical result
+					res.sendfile('results/' + storedQSUUID + '/tree.png')
+				} else { // send text result
+					res.sendfile('results/' + storedQSUUID + '/epa_result.jplace')	
+				}
+					
 			}
 		});
 

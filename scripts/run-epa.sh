@@ -41,3 +41,6 @@ rm -rf results/$uuid/stat
 rm -rf results/$uuid/pepa.status
 rm -rf results/$uuid/*.bin
 
+## generate png image
+/bin/bash scripts/./graphic-from-results.sh $uuid
+

@@ -8,5 +8,5 @@ uuid=$1
 ## activate environment in order to use ete3
 export PATH=~/anaconda_ete/bin:$PATH
 
-## generate image
+## generate png image
 ete3 view -t results/$uuid/epa_result.nw --image results/$uuid/tree.png --face 'value:@name, color:auto()' --face 'value:@dist, pos:b-top, color:steelblue, size:8'
