@@ -85,12 +85,11 @@ router.post('/upload-qs', function(req, res) {
 	});
 });
 
-// GET /api/phylogenetic?tree=[treeName]&qs=[UUID]&graphic=[Boolean]  <-- URL
-// for example: http://localhost:3000/api/phylogenetic?tree=Animals&qs=a725f87f-c3c1-4c31-858e-be2a83924acb&graphic=true
-router.get('/phylogenetic', function(req, res) {
+// GET /api/analysis-text-result?tree=[treeName]&qs=[UUID]  <-- URL
+// for example: http://localhost:3000/api/analysis-text-result?tree=Animals&qs=a725f87f-c3c1-4c31-858e-be2a83924acb
+router.get('/analysis-text-result', function(req, res) {
     var tree = req.query.tree; // name of the tree to be used
     var storedQSUUID = req.query.qs; // uuid of the QS file previously uploaded
-	var graphic = req.query.graphic; // graphical result if true, text result otherwise
 
 	var util = require('util'),
     exec = require('child_process').exec,
@@ -101,13 +100,30 @@ router.get('/phylogenetic', function(req, res) {
     		if (error !== null) {
       			console.log('Exec error: ' + error);
     		} else {
-				// retrieve result
-				if (graphic) { // send graphical result
-					res.sendfile('results/' + storedQSUUID + '/tree.png')
-				} else { // send text result
-					res.sendfile('results/' + storedQSUUID + '/epa_result.jplace')	
-				}
-					
+				// retrieve result -> send text result
+				res.sendfile('results/' + storedQSUUID + '/epa_result.jplace')		
+			}
+		});
+
+});
+
+// GET /api/analysis-graphical-result?tree=[treeName]&qs=[UUID]  <-- URL
+// for example: http://localhost:3000/api/analysis-graphical-result?tree=Animals&qs=a725f87f-c3c1-4c31-858e-be2a83924acb
+router.get('/analysis-graphical-result', function(req, res) {
+    var tree = req.query.tree; // name of the tree to be used
+    var storedQSUUID = req.query.qs; // uuid of the QS file previously uploaded
+
+	var util = require('util'),
+    exec = require('child_process').exec,
+    child;
+
+	child = exec('/bin/bash scripts/run-epa.sh ' + storedQSUUID + " " + tree,
+  		function (error, stdout, stderr) {     
+    		if (error !== null) {
+      			console.log('Exec error: ' + error);
+    		} else {
+				// retrieve result -> send graphical result
+				res.sendfile('results/' + storedQSUUID + '/tree.png')
 			}
 		});
 
