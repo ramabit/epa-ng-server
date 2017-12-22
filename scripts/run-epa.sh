@@ -23,8 +23,13 @@ for QS_FILE in $(find uploads/ -name $fileSearchString); do
 done
 
 ## create directory for results if doesn't exist
-mkdir results/
-mkdir results/$uuid/
+if [ ! -f results ]; then
+	mkdir results/
+fi
+
+if [ ! -f results/$uuid ]; then	
+	mkdir results/$uuid/
+fi
 
 ## call papara and genesis preprocess script
 /bin/bash scripts/./run-papara-and-genesis.sh $uuid $phylipAlignmentFile $treeFile $qsFile
