@@ -1,11 +1,17 @@
 from ete3 import Tree
 import sys
 
-fileName=sys.argv[1]
+uuid=sys.argv[1]
+queryLabelsArray=sys.argv[2].split(",")
 
-file = open(fileName, 'r')
+newickFileName="results/" + uuid + "/epa_result.nw"
+imageResultFileName="results/" + uuid + "/tree.png
+
+file = open(newickFileName, 'r')
 fileContent = file.read()
 file.close()
 
 t = Tree(fileContent)
-t.render("results.png", w=183, units="mm")
+t.render(imageResultFileName, w=185, units="mm")
+
+## TODO Use queryLabelsArray to apply at those labels a different color in the graphic
