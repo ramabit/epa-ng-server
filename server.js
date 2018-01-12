@@ -107,11 +107,12 @@ router.get('/analysis-text-result', function(req, res) {
 
 });
 
-// GET /api/analysis-graphical-result?tree=[treeName]&qs=[UUID]  <-- URL
-// for example: http://localhost:3000/api/analysis-graphical-result?tree=Animals&qs=a725f87f-c3c1-4c31-858e-be2a83924acb
+// GET /api/analysis-graphical-result?tree=[treeName]&qs=[UUID]&graphicType[type]  <-- URL
+// for example: http://localhost:3000/api/analysis-graphical-result?tree=Animals&qs=a725f87f-c3c1-4c31-858e-be2a83924acb&graphicType=circular
 router.get('/analysis-graphical-result', function(req, res) {
     var tree = req.query.tree; // name of the tree to be used
     var storedQSUUID = req.query.qs; // uuid of the QS file previously uploaded
+	var graphicType	= req.query.graphicType; // type of graphic: horizontal (default), vertical or circular
 
 	var util = require('util'),
     exec = require('child_process').exec,
@@ -123,7 +124,22 @@ router.get('/analysis-graphical-result', function(req, res) {
       			console.log('Exec error: ' + error);
     		} else {
 				// retrieve result -> send graphical result
-				res.sendfile('results/' + storedQSUUID + '/tree.png')
+				var fileName = "horizontal-tree.png"
+
+				if (graphicType != null) {
+					switch (graphicType) {
+						case "vertical":
+							fileName = "vertical-tree.png"
+							break;
+						case "circular":
+							fileName = "circular-tree.png"
+							break;
+						default:
+							fileName = "horizontal-tree.png"
+					}
+				}
+
+				res.sendfile('results/' + storedQSUUID + '/' + fileName)
 			}
 		});
 

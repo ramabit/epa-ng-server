@@ -50,6 +50,6 @@ rm -rf results/$uuid/*.bin
 queryLabelsArray=$(../genesis/bin/apps/./fasta_labels $qsFile |tr '\n' ',')
 queryLabelsArray="${queryLabelsArray::-1}"
 
-## generate png image
+## generate png images
 /bin/bash scripts/./graphic-from-results.sh $uuid $queryLabelsArray
 

@@ -10,8 +10,8 @@ def queryLabelsArray():
 def newickFileName():
 	return "results/" + uuid() + "/epa_result.nw"
 
-def imageResultFileName():
-	return "results/" + uuid() + "/tree.png"
+def imageResultFileName(fileName):
+	return "results/" + uuid() + "/" + fileName + ".png"
 
 def createTree():
 	file = open(newickFileName(), 'r')

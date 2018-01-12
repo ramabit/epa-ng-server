@@ -39,5 +39,5 @@ ts.mode = "c"
 ## ts.mode = "c" // "c" for circular graphic, "r" for rectangular graphic
 ## ts.orientation = 0 // 0 means up to down, 1 means down to up
 
-tree.render(imageResultFileName(), w=200, units="mm", dpi=150, tree_style=ts)
+tree.render(imageResultFileName("circular-tree"), w=200, units="mm", dpi=150, tree_style=ts)
 

@@ -11,9 +11,20 @@ fi
 ## activate environment in order to use ete3
 export PATH=~/anaconda_ete/bin:$PATH
 
-## generate png image
-if [ ! -f results/$uuid/tree.png ]; then
-ete3 view -t results/$uuid/epa_result.nw --image results/$uuid/tree.png --face 'value:@name, color:auto()' --face 'value:@dist, pos:b-top, color:steelblue, size:8'
+## generate horizontal png image
+if [ ! -f results/$uuid/horizontal-tree.png ]; then
+	python scripts/graphical/horizontal-tree.py $uuid $queryLabelsArray
 fi
 
-python scripts/graphic.py $uuid $queryLabelsArray
+## generate vertical png image
+if [ ! -f results/$uuid/vertical-tree.png ]; then
+	python scripts/graphical/vertical-tree.py $uuid $queryLabelsArray
+fi
+
+## generate circular png image
+if [ ! -f results/$uuid/circular-tree.png ]; then
+	python scripts/graphical/circular-tree.py $uuid $queryLabelsArray
+fi
+
+
+
