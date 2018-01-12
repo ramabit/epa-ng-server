@@ -19,12 +19,12 @@ nsOriginal["fgcolor"] = "blue"
 nsNew = NodeStyle()
 nsNew["fgcolor"] = "red"
 nsNew["shape"] = "sphere"
-nsNew["size"] = 10
+nsNew["size"] = 9
 nsNew["hz_line_type"] = 1
 nsNew["hz_line_color"] = "red"
 
-faceOriginal = AttrFace("name", fsize=5)
-faceNew = AttrFace("name", fsize=10)
+faceOriginal = AttrFace("name", fsize=6, text_prefix=" ")
+faceNew = AttrFace("name", fsize=9, fstyle="italic", text_prefix=" ")
 
 def newNode(leaf):
 	leaf.set_style(nsNew)
@@ -42,8 +42,15 @@ for leaf in tree:
         
 ts = TreeStyle()
 ts.show_leaf_name = False
+ts.show_scale = False
+ts.show_branch_length = True
+ts.margin_top = 5
+ts.margin_bottom = 5
+ts.margin_left = 5
+ts.margin_right = 5
 
-##tree.img_style["size"] = 5
-##tree.img_style["fgcolor"] = "LightSteelBlue"
+## ts.mode = "c" // "c" for circular graphic, "r" for rectangular graphic
+## ts.orientation = 0 // If 0, tree is drawn from left-to-right. If 1, tree is drawn from right-to-left. This property only makes sense when “r” mode is used.
+## ts.rotation = 0 // use 90 for vertical graphic
 
 tree.render(imageResultFileName, w=185, units="mm", tree_style=ts)
