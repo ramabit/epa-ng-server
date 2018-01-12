@@ -46,6 +46,10 @@ rm -rf results/$uuid/stat
 rm -rf results/$uuid/pepa.status
 rm -rf results/$uuid/*.bin
 
-## generate png image
-/bin/bash scripts/./graphic-from-results.sh $uuid
+## obtain array of query labels
+queryLabelsArray=$(../genesis/bin/apps/./fasta_labels $qsFile |tr '\n' ',')
+queryLabelsArray="${queryLabelsArray::-1}"
+
+## generate png images
+/bin/bash scripts/./graphic-from-results.sh $uuid $queryLabelsArray
 
