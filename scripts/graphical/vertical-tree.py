@@ -15,4 +15,4 @@ ts.rotation = 90
 
 ## ts.orientation = 0 // 0 means up to down, 1 means down to up
 
-tree.render(imageResultFileName(), w=185, units="mm", tree_style=ts)
+tree.render(imageResultFileName(), w=200, units="mm", tree_style=ts)

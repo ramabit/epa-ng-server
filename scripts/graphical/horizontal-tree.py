@@ -14,4 +14,4 @@ ts.mode = "r" ## rectangular graphic
 
 ## ts.orientation = 0 // 0 means left to right, 1 means right to left
 
-tree.render(imageResultFileName(), w=185, units="mm", tree_style=ts)
+tree.render(imageResultFileName(), w=200, units="mm", tree_style=ts)

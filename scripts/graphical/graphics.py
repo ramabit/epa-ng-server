@@ -44,3 +44,4 @@ def originalNode(leaf):
 	faceOriginal = AttrFace("name", fsize=6, text_prefix=" ")
 	leaf.set_style(nsOriginal)
 	leaf.add_face(faceOriginal, column=0, position="branch-right")
+
