@@ -161,9 +161,6 @@ router.post('/results-email', function(req, res) {
 	  html: 'We send you the result of your analysis. Thank you for using EPA-ng!',
 	  attachments: [
 		{
-		  path: 'results/' + uuid + '/epa_result.jplace'
-		},
-		{
 		  path: 'results/' + uuid + '/horizontal-tree.png'
 		},
 		{
@@ -171,6 +168,9 @@ router.post('/results-email', function(req, res) {
 		},
 		{
 		  path: 'results/' + uuid + '/circular-tree.png'
+		},
+		{
+		  path: 'results/' + uuid + '/epa_result.jplace'
 		}
 	  ]
 	}, function (err, reply) {
