@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload'); // call fileUpload
 const bodyParser = require('body-parser'); // call body=parser
 const mkdirp = require('mkdirp'); // call mkdirp
 const uuid = require('uuid'); // call uuid
+const sendmail = require('sendmail')(); // call sendmail
 
 const app = express(); // define our app using express
 
@@ -143,6 +144,41 @@ router.get('/analysis-graphical-result', function(req, res) {
 			}
 		});
 
+});
+
+// POST set email to receive results
+// assuming POST: uuid=SARASA&email=sarasa@sarasa.com            <-- URL encoding
+// or       POST: {"uuid":"SARASA","email":"sarasa@sarasa.com"}  <-- JSON encoding
+// http://localhost:3000/api/results-email
+router.post('/results-email', function(req, res) {
+	var uuid = req.body.uuid;
+    var email = req.body.email;
+	
+	sendmail({
+	  from: 'no-reply@epa-ng',
+	  to: email,
+	  subject: 'Analysis results',
+	  html: 'We send you the result of your analysis. Thank you for using EPA-ng!',
+	  attachments: [
+		{
+		  path: 'results/' + uuid + '/epa_result.jplace'
+		},
+		{
+		  path: 'results/' + uuid + '/horizontal-tree.png'
+		},
+		{
+		  path: 'results/' + uuid + '/vertical-tree.png'
+		},
+		{
+		  path: 'results/' + uuid + '/circular-tree.png'
+		}
+	  ]
+	}, function (err, reply) {
+	  console.log(err && err.stack)
+	  console.dir(reply)
+	});
+
+	res.send('E-mail sent to ' + email);
 });
 
 // REGISTER OUR ROUTES -------------------------------
